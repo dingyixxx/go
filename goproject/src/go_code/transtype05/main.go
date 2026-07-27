@@ -23,6 +23,9 @@ func main() {
 	fmt.Printf("%T,%q \n", str2, str2)
 
 	str3 := strconv.FormatBool(b2)
-	fmt.Printf("str3:%T,%q", str3, str3)
+	fmt.Printf("str3:%T,%q\n", str3, str3)
+
+	var num11 = 119
+	fmt.Println(strconv.Itoa(num11))
 
 }

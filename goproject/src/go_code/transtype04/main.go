@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	//	基本数据类型和string的转换
 
-	//
+	// 基本数据类型 转 string
 	var num1 = 99
 	var num2 = 23.456
 	var b = true
