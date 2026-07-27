@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
 	//	基本数据类型和string的转换
@@ -24,5 +27,11 @@ func main() {
 
 	fmt.Println(str4)
 	fmt.Println(str)
+
+	num3, _ := strconv.Atoi("01101")
+	fmt.Println(num3)
+
+	num4, _ := strconv.ParseInt("01101", 2, 64)
+	fmt.Println(num4)
 
 }
