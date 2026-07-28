@@ -8,8 +8,8 @@ func main() {
 	var n1 int32 = 12
 	var n2 int64
 	var n3 int8
-	//n2 = int64(n1 + 20) //把int32交给int8是错误的
-	//n3 = int8(n1 + 20)  //把int32交给int64是错误的
+	//n2 = int64(n1 + 20) //把int32交给int64是错误的
+	//n3 = int8(n1 + 20)  //把int32交给int8是错误的
 
 	n2 = int64(n1) + 20 //这样写也是可以的 字面量是块砖，它嫁鸡随鸡，嫁狗随狗
 	n3 = int8(n1) + 20  //这样写也是可以的
