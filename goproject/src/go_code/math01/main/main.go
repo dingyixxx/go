@@ -42,6 +42,7 @@ func main() {
 		fmt.Printf("类型=%T,值=%v\n", f, f)         //float64
 		fmt.Printf("类型=%T,值=%v\n", exact, exact) //bool
 		sqrtFloat := math.Sqrt(f)
+		//但decimal好像不像java的BigDecimal有直接开根号的api，所以，还是要用math类
 		sqrtFloatDecimal := decimal.NewFromFloat(sqrtFloat)
 		negB := b.Neg()
 		denominator := a.Mul(decimal.NewFromInt(2))
