@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	//map的key是无序的，每次遍历key，输出的结果都不一眼
+	//map的key是无序的，每次遍历key，输出的结果都不一样
 	m := make(map[int]int)
 	m[12] = 100
 	m[11] = 13
