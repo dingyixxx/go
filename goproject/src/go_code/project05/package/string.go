@@ -15,7 +15,7 @@ func main() {
 	fmt.Println(`aa
               aaaaaa`)
 
-	fmt.Println(`package main
+	fmt.Println(`utils main
 
 import "fmt"
 

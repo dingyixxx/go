@@ -27,10 +27,10 @@ func main() {
 //go的目录结构：goproject-src-go_code
 //--project01
 //-----main
-//-----package
+//-----utils
 //--project02
 //-----main
-//-----package
+//-----utils
 
 //dos
 //md test001 mkdir

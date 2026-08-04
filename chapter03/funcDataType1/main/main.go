@@ -4,7 +4,6 @@ import "fmt"
 
 func main() {
 	//	go支持自定义数据类型，相当于给数据类型取了一个别名
-	//	疲倦吗 《还可以爱吗》 黄霄云
 
 	type myInt int //这时myInt就等价int来使用
 	// 给int取了别名myInt，在go中myInt和int虽然都是int类型，但是go认为myInt和int是两个类型

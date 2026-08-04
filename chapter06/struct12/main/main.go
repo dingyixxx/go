@@ -20,6 +20,7 @@ func (self A) test() {
 func (self *A) test1() {
 	(*self).Num = 10086
 	fmt.Println((*self).Num)
+	fmt.Printf("test1的self的A的地址:%p\n", self)
 }
 
 func main() {
@@ -30,4 +31,5 @@ func main() {
 	fmt.Println(baby.Num)
 	baby.test1() //
 	fmt.Println(baby.Num)
+	fmt.Printf("main的baby的A的地址:%p\n", &baby)
 }

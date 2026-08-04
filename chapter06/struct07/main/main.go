@@ -52,12 +52,12 @@ func main() {
 
 	fmt.Printf("rect1-leftUpPtr指向的地址:%p, rect1-rightDownPtr指向的地址:%p\n",
 		rect1.leftUpPtr, rect1.rightDownPtr)
-	//未必连续，大概率不连续，因为之前已经造了很多碎片
+	//未必连续，因为之前已经造了很多碎片
 	//rect1-leftUpPtr指向的地址:0x14000010090, rect1-rightDownPtr指向的地址:0x140000100c0
 
 	fmt.Printf("rect1-leftUpPtr指向的地址的x:%p, rect1-leftUpPtr指向的地址的y:%p, rect1-rightDownPtr指向的地址的x:%p, rect1-rightDownPtr指向的地址的y:%p\n",
 		&((*rect1.leftUpPtr).x), &((*rect1.leftUpPtr).y), &((*rect1.rightDownPtr).x), &((*rect1.rightDownPtr).y))
-	//前二者连续，后二者连续，而，前二者 vs 后二者，大概率不连续，因为之前已经造了很多碎片
+	//前二者连续，后二者连续，而，前二者 vs 后二者，因为之前已经造了很多碎片
 	//rect1-leftUpPtr指向的地址的x:0x14000010090, rect1-leftUpPtr指向的地址的y:0x14000010098, rect1-rightDownPtr指向的地址的x:0x140000100c0, rect1-rightDownPtr指向的地址的y:0x140000100c8
 
 }
@@ -78,8 +78,4 @@ func MakeMemoryFragments() {
 
 }
 
-//	想想也是，结构体本身是“值类型”，那么，数据当然都是存在一起的
-//	本身，就是“按照地址直接加减”的，所以，速度比较快
-
 //	https://leetcode.com/problems/booking-concert-tickets-in-groups/description/
-//	2286. Booking Concert Tickets in Groups

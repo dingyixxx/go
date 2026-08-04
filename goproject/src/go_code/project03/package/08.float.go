@@ -12,7 +12,7 @@ func main() {
 	//go的普通业务计算一般优先使用float64，float32反而只在明确需要节省内存时使用（不建议用）
 	//goland格式化代码
 
-	//Go 不允许同一个 package 中有多个 main 函数。
+	//Go 不允许同一个 utils 中有多个 main 函数。
 
 	//在同一个目录下有多个含func main()的.go文件时，不能一起编译，只能用go run 具体文件 来单独运行某一个
 
