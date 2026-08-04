@@ -22,25 +22,9 @@ type RectPtr struct {
 
 func main() {
 
-	MakeMemoryFragments() //故意营造一种“碎片化”了的内存
-
+	rect := Rect{Point{2, 2}, Point{10, 10}}
 	//	结构体的所有字段的数据，在“内存”中是“连续”的
 
-	//	想想也是，结构体本身是“值类型”，那么，数据当然都是存在一起的
-	//	本身，就是“按照地址直接加减”的，所以，速度比较快
-
-	//  gather，
-	//  分配一块连续的内存空间，
-	//  因为，本来就是“一起来，一起走”，
-	//  那么，坐在一起，效率高
-
-	//	scatter，
-	//	当“不一定要坐在一起的时候”，就分散着坐，
-	//	因为，演唱会的会场，就这么多资源，
-	//	就能给“需要坐在一起”的“组”，更多的“机会”，
-	//	座位的利用率，高
-
-	rect := Rect{Point{2, 2}, Point{10, 10}}
 	fmt.Printf("rect-leftUp-x: %p,"+
 		"rect-leftUp-y: %p,"+
 		"rect-rightDown-x: %p,"+
@@ -55,6 +39,8 @@ func main() {
 	//rect-leftUp:0x140000180a0, rect-rightDown:0x140000180b0
 
 	fmt.Println("------")
+	MakeMemoryFragments()
+
 	rect1 := RectPtr{&Point{2, 2}, &Point{10, 10}}
 
 	//	rect1 RectPtr的属性值 是连续的，但是，它们指向的地址，不是连续的
@@ -76,24 +62,24 @@ func main() {
 
 }
 
+// 故意营造一种“碎片化”了的内存
 func MakeMemoryFragments() {
 	// 第1步：分配一堆小块，占满内存
 	blocks := make([][]byte, 100)
 	for i := 0; i < 100; i++ {
-		blocks[i] = make([]byte, 1024) // 每个 1KB
+		blocks[i] = make([]byte, 9)
 	}
-	fmt.Println("第1步：分配了100个1KB块，内存连续占用")
 
 	// 第2步：释放偶数位置的块，制造"碎片空洞"
 	for i := 0; i < 100; i += 2 {
 		blocks[i] = nil // 释放，产生碎片
 	}
 	runtime.GC() // 强制 GC
-	fmt.Println("第2步：释放了50个块，内存出现碎片空洞")
-	fmt.Println("  内存布局: [已用][空洞][已用][空洞][已用][空洞]...")
 
 }
 
-//	那么，你为什么会看到这个题呢，为什么又会记住呢
+//	想想也是，结构体本身是“值类型”，那么，数据当然都是存在一起的
+//	本身，就是“按照地址直接加减”的，所以，速度比较快
+
 //	https://leetcode.com/problems/booking-concert-tickets-in-groups/description/
 //	2286. Booking Concert Tickets in Groups
