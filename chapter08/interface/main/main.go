@@ -6,6 +6,7 @@ type Usb interface {
 	//声明了两个没有实现的方法
 	Start()
 	Stop()
+	//Test() //如果接口要求实现Test,那么,如果传入的结构体没有实现该方法,则会报错
 }
 
 type Phone struct {

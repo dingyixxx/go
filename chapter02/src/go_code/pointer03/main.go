@@ -19,6 +19,4 @@ func main() {
 	//	2）值类型包括：基本数据类型 int系列，float系列，bool、string、数组和结构体struct
 	//	数组 和 结构体struct 也是值类型
 
-
-
 }

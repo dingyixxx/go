@@ -23,5 +23,4 @@ func main() {
 	fmt.Printf("ptr的地址=%v\n", &ptr)
 	fmt.Printf("ptr的指向的值=%v", *ptr)
 
-
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_code/goproject/src/go_code/valuetype/model"
+	"go_code/chapter02/src/go_code/valuetype/model"
 )
 
 func main() {
