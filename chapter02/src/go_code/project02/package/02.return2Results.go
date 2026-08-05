@@ -24,7 +24,7 @@ func main() {
 
 //目录结构的说明
 
-//go的目录结构：goproject-src-go_code
+//go的目录结构：chapter00-src-go_code
 //--project01
 //-----main
 //-----utils

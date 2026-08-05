@@ -17,4 +17,7 @@ func main() {
 	var t T
 	t = "hello"
 	fmt.Println(t)
+
+	//	interface是引用类型.如果没有赋值,默认为nil.
+
 }
