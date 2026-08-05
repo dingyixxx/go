@@ -46,14 +46,13 @@ func (human Human) KeepPet(theAnimal Animal, called string) {
 
 func main() {
 	human := Human{}
-	c := Cat{}
+	c := &Cat{}
 	fmt.Printf("c的地址是：%p   ", &c)
 	human.KeepPet(c, "加菲")
 	fmt.Printf("%q的打招呼语是%q\n", c.Name, c.HelloSentence)
 	fmt.Println("------------------------")
-	//哪怕传的是值，但因为interface是引用传递，打印出来的内存地址，也是一样的
-	//传指针也不报错
-	d := Dog{}
+	//传指针也不报错,但没有用
+	d := &Dog{}
 	fmt.Printf("d的地址是：%p   ", &d)
 	human.KeepPet(d, "哮天犬")
 	fmt.Printf("%q的打招呼语是%q\n", d.Name, d.HelloSentence)
