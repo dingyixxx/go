@@ -26,9 +26,9 @@ func main() {
 	//
 	//goroutine 1 [running]:
 	//main.test()
-	//	/Desktop/go/chapter04/error/main/main.go:8 +0x1c
+	//	/Desktop/go/chapter04/error/main/calc_test.go:8 +0x1c
 	//main.main()
-	//	/Desktop/go/chapter04/error/main/main.go:14 +0x1c
+	//	/Desktop/go/chapter04/error/main/calc_test.go:14 +0x1c
 	//
 	//Process finished with the exit code 2
 	test()

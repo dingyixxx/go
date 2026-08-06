@@ -1,0 +1,11 @@
+package main
+
+func addUpper(n int) (sum int) {
+	sum = 0
+	for i := 0; i <= n; i++ {
+		sum += i
+	}
+	return sum
+}
+
+//go test -v
