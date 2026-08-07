@@ -14,12 +14,10 @@ func test() {
 }
 
 func main() {
-	//go 并行
 	go test()
-	//test()
-
-	for i := 1; i <= 10; i++ {
+	for i := 1; i <= 3; i++ {
 		fmt.Println("main() hello,golang " + strconv.Itoa(i))
 		time.Sleep(time.Second)
 	}
+	//	协程，是主线程的守护线程
 }
