@@ -13,7 +13,7 @@ func main() {
 	for i = 1; i <= 400; i++ {
 		go calcFactorial(i)
 	}
-	lock.Lock() //todo 溢出 加锁
+	lock.Lock()
 	for k, v := range m {
 		fmt.Printf("%v的阶乘是:%v\n", k, v)
 	}
