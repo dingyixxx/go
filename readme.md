@@ -1,4 +1,4 @@
-![switch-case重复值错误示例](chapter00/img.png)
+
 
 
 ![资源监视器CPU对比](chapter02/2026-07-29_22-09-06.png)
@@ -10,7 +10,7 @@
 
 ![Go init函数执行顺序与变量作用域](2026-07-31_13-06-34.png)
 
-![Go跨包import与init执行顺序](2026-07-31_13-34-53.png)
+
 
 ![Go跨包init执行顺序-getNumInner示例](2026-07-31_13-41-45.png)
 
