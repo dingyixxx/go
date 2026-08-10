@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// 作业一
 var count int = 2000
 var numChan chan int = make(chan int, count)
 var resChan chan map[int]int = make(chan map[int]int, count)

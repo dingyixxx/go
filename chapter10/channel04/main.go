@@ -48,6 +48,14 @@ var mu sync.Mutex
 func main() {
 	//一定要make，且一定要make指定的capacity
 	var intChan = make(chan int, 50)
+
+	//var intChan = make(chan int, 2)
+	//如果管道如果不够长(例如,只能放两个),
+	//并不会报错,
+	//只是会阻塞写入,
+	//即, 只要调度器发现有协程还在写, 这些任务都会被挂起
+
+	//var intChan = make(chan int, 10)
 	var exitChan = make(chan bool, 1)
 
 	//读和写，一定要用上“协程”做的
@@ -58,11 +66,28 @@ func main() {
 	//先读，再写，为什么也可以
 	//因为readData里，只要intChan没关，读就死等
 
+	//如果把go readData(intChan, exitChan)这行注释掉,
+	//只写不读,就会因为v, ok := <-exitChan在死等
+	//且"不可能有任何逻辑写入它"而报错
+	//fatal error: all goroutines are asleep - deadlock!
+
+	//那么, 有一个问题是, 为什么这次"死等"就报错了, "先读再写"也是在死等就没有报错?
+	//go1.25.12/src/runtime/proc.go:443 等到进程结束了"都没等来", 那就是错误
+	//8秒后, 调度器发现所有协程都"沉睡"了(没可能有东西写入管道了), 才会出现这个错误
+	//fatal error: all goroutines are asleep - deadlock!
+	//等到主协程结束了"等到了", 那就没有问题
+
+	//其实,"先读再写"是同理的,如果写协程不写intChan,
+	//又不关intChan,
+	//读线程也是会在"go readData(intChan, exitChan)--->v, ok := <-intChan这个报错堆栈"崩溃
+
 	//协程是主线程的守护线程，此处如果啥也不写，协程也没了
 	//time.Sleep(time.Second * 15)
 
 	for {
 		mainThreadStatus() //因为exitChan只有一个元素，所以，只打印一次
+		//time.Sleep(time.Millisecond * 8000)
+
 		v, ok := <-exitChan
 		if ok == false {
 			fmt.Println("现在，可以退出了...")
@@ -102,7 +127,13 @@ func readData(intChan chan int, exitChan chan bool) {
 		v, ok := <-intChan
 		if ok == true {
 			fmt.Println("readData读到了", v)
-			time.Sleep(time.Millisecond * 60)
+			//time.Sleep(time.Millisecond * 60)
+			time.Sleep(time.Millisecond * 2000)
+			//把intChan的容量改10, 读速减慢, 看看会怎样?
+			//会阻塞读
+			//Java的LinkedBlockingQueue两把锁, 吞吐高
+			//ai和我共同操作一个资源, 我读的速度慢, ai写得快
+
 		} else {
 			fmt.Println("readData读完了...")
 			break
@@ -117,10 +148,11 @@ func readData(intChan chan int, exitChan chan bool) {
 }
 
 func writeData(intChan chan int) {
-	for i := 0; i < cap(intChan); i++ {
+	for i := 0; i < 50; i++ {
+		//time.Sleep(time.Millisecond * 2000)
 		time.Sleep(time.Millisecond * 47)
 		intChan <- i + 1
-		fmt.Println("writeData写了......", i+1)
+		fmt.Println("writeData写了.....下标....", i)
 
 	}
 	close(intChan)
@@ -128,4 +160,8 @@ func writeData(intChan chan int) {
 }
 
 //有点像发布订阅
-//channel：请鳖入翁，随后，可以开始瓮中捉鳖，不捉不用关
+
+//channel：
+//请鳖入瓮，随后，可以开始瓮中捉鳖，
+//不捉则不用关（for...i...就不需要close），
+//要捉（while监听到“是最后一个”、后面没有了，就false break）则必须关（close）
