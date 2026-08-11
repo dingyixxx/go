@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"go_code/chatroom/common/message"
+	utils "go_code/chatroom/utils"
 	"net"
-	"time"
 )
 
 func Login(userId int, userPwd string) (err error) {
@@ -66,9 +67,26 @@ func Login(userId int, userPwd string) (err error) {
 	}
 
 	//休眠20
-	time.Sleep(20 * time.Second)
-	fmt.Println("休眠了20..")
+	//time.Sleep(20 * time.Second)
+	//fmt.Println("休眠了20..")
 	// 这里还需要处理服务器端返回的消息.
+	mes, err = utils.ReadPkg(conn)
+	if err != nil {
+		fmt.Println("readPkg(conn) err=", err)
+		return
+	}
+
+	//将mes的Data部分反序列化成 LoginResMes
+	var loginResMes message.LoginResMes
+	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
+	if loginResMes.Code == 200 {
+		fmt.Println("登录成功")
+	} else if loginResMes.Code == 500 {
+		fmt.Println(loginResMes.Error)
+		fmt.Println("500err-", err)
+		err = errors.New(loginResMes.Error)
+	} //汤姆凯特
+
 	return
 
 }

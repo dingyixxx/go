@@ -1,43 +1,73 @@
 package main
 
 import (
-	"encoding/binary"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"go_code/chatroom/common/message"
+	"go_code/chatroom/utils"
 	"io"
 	"net"
 )
 
-func readPkg(conn net.Conn) (mes message.Message, err error) {
-
-	buf := make([]byte, 8096)
-	read, err := conn.Read(buf[:4])
-	fmt.Println("读取客户端发送的数据..", read) //从conn读取字节到buf中
-
+// 编写一个函数serverProcessLogin函数，专门处理登录请求
+func serverProcessLogin(conn net.Conn, mes *message.Message) (err error) {
+	//核心代码...
+	//1. 先从mes 中取出 mes.Data，并直接反序列化成LoginMes
+	var loginMes message.LoginMes
+	err = json.Unmarshal([]byte(mes.Data), &loginMes)
 	if err != nil {
-		fmt.Println("conn.Read err=", err)
-		err = errors.New("读长度出错了")
+		fmt.Println("json.Unmarshal fail err=", err)
 		return
 	}
-	//根据buf[:4] 转成一个 uint32类型
-	var pkgLen uint32
-	pkgLen = binary.BigEndian.Uint32(buf[0:4])
-	fmt.Println("读到的buf=", buf[:4])
 
-	//根据pkgLen读取消息内容
-	//从conn读pkgLen个字节,扔到buf
-	n, err := conn.Read(buf[:pkgLen])
-	fmt.Println("n=", n)
-	if n != int(pkgLen) || err != nil {
-		err = errors.New("读内容出错了")
+	//先声明一个 resMes
+	var resMes message.Message
+	resMes.Type = message.LoginResMesType
+	//在声明一个 LoginResMes
+	var loginResMes message.LoginResMes
+	//如果用户id= 100， 密码=123456，认为合法，否则不合法
+	if loginMes.UserId == 100 && loginMes.UserPwd == "123456" {
+		loginResMes.Code = 200
+		loginResMes.Error = "用户登录成功"
+		//合法
+	} else {
+		//不合法
+		loginResMes.Code = 500
+		loginResMes.Error = "表示该用户不存在"
+	}
+
+	//3将 loginResMes 序列化
+	data, err := json.Marshal(loginResMes)
+	if err != nil {
+		fmt.Println("json.Marshal fail", err)
 		return
 	}
-	err = json.Unmarshal(buf[:pkgLen], &mes)
+
+	//4. 将data 赋值给 resMes
+	resMes.Data = string(data)
+
+	//5. 对resMes 进行序列化，准备发送
+	data, err = json.Marshal(resMes)
 	if err != nil {
-		fmt.Println("json.Unmarsha err=", err)
+		fmt.Println("json.Marshal fail", err)
 		return
+	}
+	err = utils.WritePkg(conn, data)
+	return
+}
+
+// 编写一个ServerProcessMes 函数
+// 功能：根据客户端发送消息种类不同，决定调用哪个函数来处理
+func serverProcessMes(conn net.Conn, mes *message.Message) (err error) {
+
+	switch mes.Type {
+	case message.LoginMesType:
+		//处理登录登录
+		err = serverProcessLogin(conn, mes)
+	case message.RegisterMesType:
+		//处理注册
+	default:
+		fmt.Println("消息类型不存在，无法处理...")
 	}
 	return
 }
@@ -48,13 +78,17 @@ func process(conn net.Conn) {
 
 	//循环的客户端发送的信息
 	for {
-		mes, err := readPkg(conn)
+		mes, err := utils.ReadPkg(conn)
 		if err != nil {
 			if err == io.EOF {
 				fmt.Println("客户端退出,服务器端也跳出循环了")
 				return
 			}
 			fmt.Println("readPkg err=", err)
+			return
+		}
+		err = serverProcessMes(conn, &mes)
+		if err != nil {
 			return
 		}
 		fmt.Println("mes=", mes)
