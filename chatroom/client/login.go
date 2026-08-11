@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"go_code/chatroom/common/message"
 	"net"
+	"time"
 )
 
 func Login(userId int, userPwd string) (err error) {
@@ -57,6 +58,17 @@ func Login(userId int, userPwd string) (err error) {
 	}
 	fmt.Println("客户端，发送消息的长度ok，为", buf, string(data))
 
-	return err
+	// 发送消息本身
+	_, err = conn.Write(data)
+	if err != nil {
+		fmt.Println("conn.Write(data) fail", err)
+		return
+	}
+
+	//休眠20
+	time.Sleep(20 * time.Second)
+	fmt.Println("休眠了20..")
+	// 这里还需要处理服务器端返回的消息.
+	return
 
 }
