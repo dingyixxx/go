@@ -27,7 +27,7 @@ func main() {
 	//for v := range stringChan {
 	//	fmt.Println(v)
 	//} //fatal error: all goroutines are asleep - deadlock!
-	//在实际开发中，确定惯到什么时候能close，有时，并不是简单的事
+	//在实际开发中，确定什么时候能close，有时，并不是简单的事
 	//此时，就可以用select
 yuan:
 	for {

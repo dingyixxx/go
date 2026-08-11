@@ -67,6 +67,8 @@ func rewriteDataToFile(i int) {
 		}
 	}
 	fmt.Printf("我是rewrite协程%v,现在,我开始数了\n", i)
+	//ioutil.ReadAll()
+	//io.ReadFull() 能定容定容，避免多次扩容
 	ioutil.WriteFile(GetFilePath(i, "final00"), []byte(str), 0666)
 	writeChan <- 1 //这种, 我感觉也是最好写在最后一行
 	fmt.Printf("我是rewrite协程%v,重写完了\n", i)

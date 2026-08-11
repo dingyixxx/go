@@ -77,9 +77,9 @@ func main() {
 	//fatal error: all goroutines are asleep - deadlock!
 	//等到主协程结束了"等到了", 那就没有问题
 
-	//其实,"先读再写"是同理的,如果写协程不写intChan,
+	//其实,"只读不写"是同理的,如果写协程不写intChan,
 	//又不关intChan,
-	//读线程也是会在"go readData(intChan, exitChan)--->v, ok := <-intChan这个报错堆栈"崩溃
+	//读协程也是会在"go readData(intChan, exitChan)--->v, ok := <-intChan这个报错堆栈"崩溃
 
 	//协程是主线程的守护线程，此处如果啥也不写，协程也没了
 	//time.Sleep(time.Second * 15)
@@ -164,4 +164,4 @@ func writeData(intChan chan int) {
 //channel：
 //请鳖入瓮，随后，可以开始瓮中捉鳖，
 //不捉则不用关（for...i...就不需要close），
-//要捉（while监听到“是最后一个”、后面没有了，就false break）则必须关（close）
+//要捉（while监听到“后面没有鳖了”，就false break）则必须关（close）

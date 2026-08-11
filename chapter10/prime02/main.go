@@ -98,7 +98,7 @@ func checkIsPrimeAndPut(i int) {
 			break
 			//有break，必有close，
 			//记死了，
-			//不可以“不close就直接for里盼false再break”，
+			//不可以“不close就直接for里判false再break”，
 			//因为根本监听不到，走不到这里
 		}
 	}
