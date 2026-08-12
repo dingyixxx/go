@@ -70,7 +70,10 @@ func Login(userId int, userPwd string) (err error) {
 	//time.Sleep(20 * time.Second)
 	//fmt.Println("休眠了20..")
 	// 这里还需要处理服务器端返回的消息.
-	mes, err = utils.ReadPkg(conn)
+	tf := &utils.Transfer{
+		Conn: conn,
+	}
+	mes, err = tf.ReadPkg()
 	if err != nil {
 		fmt.Println("readPkg(conn) err=", err)
 		return
