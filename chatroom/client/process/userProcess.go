@@ -1,4 +1,4 @@
-package main
+package process
 
 import (
 	"encoding/binary"
@@ -10,7 +10,11 @@ import (
 	"net"
 )
 
-func Login(userId int, userPwd string) (err error) {
+type UserProcess struct {
+	Conn net.Conn
+}
+
+func (this *UserProcess) Login(userId int, userPwd string) (err error) {
 	//fmt.Printf("您输入的用户名是:%v,密码是:%v\n", userId, userPwd)
 	//return nil
 	//1. 链接到服务器
@@ -84,6 +88,10 @@ func Login(userId int, userPwd string) (err error) {
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 	if loginResMes.Code == 200 {
 		fmt.Println("登录成功")
+		go ServerProcessMes(conn)
+		for {
+			ShowMenu()
+		}
 	} else if loginResMes.Code == 500 {
 		fmt.Println(loginResMes.Error)
 		fmt.Println("500err-", err)
