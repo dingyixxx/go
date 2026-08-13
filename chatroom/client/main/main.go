@@ -7,6 +7,7 @@ import (
 
 var userId int
 var userPwd string
+var userName string
 
 func main() {
 	var key int
@@ -40,7 +41,19 @@ func main() {
 			}
 		case 2:
 			fmt.Println("注册用户")
-			loop = false
+			fmt.Println("请输入用户id:")
+			fmt.Scanf("%d\n", &userId)
+			fmt.Println("请输入用户密码:")
+			fmt.Scanf("%s\n", &userPwd)
+			fmt.Println("请输入用户名字(nickname):")
+			fmt.Scanf("%s\n", &userName)
+			processor := &process.UserProcess{}
+			err := processor.Register(userId, userPwd, userName)
+			if err != nil {
+				fmt.Println("注册失败")
+			} else {
+				fmt.Println("注册成功")
+			}
 		case 3:
 			fmt.Println("退出系统")
 			loop = false
