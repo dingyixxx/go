@@ -43,15 +43,16 @@ func (this *Processor) process2() (err error) {
 		tf := &utils.Transfer{
 			Conn: this.Conn,
 		}
-		mes, err := tf.ReadPkg()
+		var mes message.Message
+		mes, err = tf.ReadPkg()
 		if err != nil {
 			if err == io.EOF {
 				fmt.Println("客户端退出，服务器端也退出")
-				return
-			} else {
-				fmt.Println("readPkg err=", err)
-				return
+				return err
 			}
+
+			fmt.Println("readPkg err=", err)
+			return err
 		}
 
 		err = this.serverProcessMes(&mes)
