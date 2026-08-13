@@ -11,7 +11,8 @@ import (
 
 type UserProcess struct {
 	//字段
-	Conn net.Conn
+	Conn   net.Conn
+	UserId int
 }
 
 //ServerProcessRegister
@@ -91,7 +92,6 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	user, err := model.MyUserDao.Login(loginMes.UserId, loginMes.UserPwd)
 
 	if err != nil {
-
 		//loginResMes.Code = 500
 		//loginResMes.Error = "该用户不存在，请注册再使用..."
 		//这里我们先测试成功!,然后我们在可以根据返回具体错误信息
@@ -105,9 +105,15 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 			loginResMes.Code = 505
 			loginResMes.Error = "服务器内部错误..."
 		}
-
 	} else {
 		loginResMes.Code = 200
+		this.UserId = loginMes.UserId
+		userMgr.AddOnlineUser(this)
+		//将当前在线用户的id 放入到loginResMes.UsersId
+		//遍历 userMgr.onlineUsers
+		for id, _ := range userMgr.onlineUsers {
+			loginResMes.UserId = append(loginResMes.UserId, id)
+		}
 		fmt.Println(user, "登录成功")
 	}
 

@@ -8,7 +8,6 @@ import (
 	"go_code/chatroom/common/message"
 	utils "go_code/chatroom/utils"
 	"net"
-	"os"
 )
 
 type UserProcess struct {
@@ -89,6 +88,15 @@ func (this *UserProcess) Login(userId int, userPwd string) (err error) {
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 	if loginResMes.Code == 200 {
 		fmt.Println("登录成功")
+		fmt.Println("当前在线用户列表如下:")
+		for _, v := range loginResMes.UserId {
+			if v == userId {
+				continue
+			}
+			fmt.Println("用户id:\t", v)
+		}
+		fmt.Print("\n\n")
+
 		go ServerProcessMes(conn)
 		for {
 			ShowMenu()
@@ -168,7 +176,6 @@ func (this *UserProcess) Register(userId int,
 		err = errors.New(registerResMes.Error)
 	}
 
-	os.Exit(0)
 	return
 
 }
