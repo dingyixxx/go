@@ -31,7 +31,7 @@ func main() {
 			fmt.Println("请输入用户的密码")
 			//fmt.Scanf("%v\n", &userPwd)
 			fmt.Scanln(&userPwd)
-			processor := &process.Processor{}
+			processor := &process.UserProcess{}
 			err := processor.Login(userId, userPwd)
 			if err != nil {
 				fmt.Println("登录失败")
