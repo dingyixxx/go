@@ -17,6 +17,10 @@ func ShowMenu() {
 	fmt.Println("----------4. 退出系统----------")
 	fmt.Println("请选择(1-4):")
 	var key int
+	var content string
+	//因为，我们总会使用到SmsProcess实例，因此我们将其定义在switch外部
+	smsProcess := &SmsProcess{}
+
 	fmt.Scanf("%d\n", &key)
 	switch key {
 	case 1:
@@ -24,6 +28,9 @@ func ShowMenu() {
 		outputOnlineUser()
 	case 2:
 		fmt.Println("发送消息")
+		fmt.Scanf("%v", &content)
+		smsProcess.SendGroupMes(content)
+
 	case 3:
 		fmt.Println("信息列表")
 	case 4:
