@@ -70,6 +70,8 @@ func ServerProcessMes(conn net.Conn) {
 			//2. 把这个用户的信息，状态保存到客户map[int]User中
 			updateUserStatus(&notifyUserStatusMes)
 			//处理
+		case message.SmsMesType: //有人群发消息
+			outputGroupMes(&mes)
 
 		default:
 			fmt.Println("服务器端返回了未知的消息类型")
