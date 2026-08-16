@@ -57,7 +57,6 @@ func (this *Transfer) WritePkg(data []byte) (err error) {
 		fmt.Println("conn.Write(bytes) fail", err)
 		return
 	}
-	//	发送data本身
 	//发送data本身
 	n, err = this.Conn.Write(data)
 	if n != int(pkgLen) || err != nil {
