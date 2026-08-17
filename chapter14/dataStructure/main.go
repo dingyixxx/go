@@ -65,6 +65,7 @@ func (this *CircleQueue) Size() int {
 
 func main() {
 	//	环形队列 redis主从复制 mysql的redoLog
+	//	golang的channel原来也是环形缓冲区
 	queue := &CircleQueue{
 		maxSize: 5,
 		head:    0,

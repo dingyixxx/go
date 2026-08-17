@@ -33,7 +33,6 @@ func main() {
 		"no1": "beijing",
 		"no2": "shanghai",
 		"no3": "guangzhou", //此处这个逗号, 没有不行
-
 	}
 	fmt.Println(goods)
 

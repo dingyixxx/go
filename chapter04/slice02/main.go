@@ -35,12 +35,13 @@ func main() {
 	fmt.Printf("len(str2)长度%d\n", len(str2))
 	//len(str2)长度21
 
-	fmt.Printf("len([]rune(str2))长度%d", len([]rune(str2)))
+	fmt.Printf("len([]rune(str2))长度%d\n", len([]rune(str2)))
 	//len([]rune(str2))长度7
 
 	//打印str2试试
 	fmt.Println("str2[0]", str2[0])
-	fmt.Println("string(str2[0:0])", string(str2[0:1])) //string(str2[0:0]) �
+	fmt.Println("string(str2[0:1])", string(str2[0:1])) //string(str2[0:0]) �
+	fmt.Println("string(str2[0:3])", string(str2[0:3])) //string(str2[0:3]) 我
 
 	//存英文的话，java浪费一半儿空间
 

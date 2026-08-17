@@ -81,7 +81,7 @@ func main() {
 	//又不关intChan,
 	//读协程也是会在"go readData(intChan, exitChan)--->v, ok := <-intChan这个报错堆栈"崩溃
 
-	//协程是主线程的守护线程，此处如果啥也不写，协程也没了
+	//协程是主协程的守护线程，此处如果啥也不写，协程也没了
 	//time.Sleep(time.Second * 15)
 
 	for {

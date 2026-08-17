@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+// 迷宫回溯，不写了
+
 // 使用数组来模拟一个栈
 type Stack struct {
 	MaxTop int     // 栈最大可以存放数的个数
