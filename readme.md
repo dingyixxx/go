@@ -1,4 +1,4 @@
-![switch-case重复值错误示例](chapter00/img.png)
+
 
 
 ![资源监视器CPU对比](chapter02/2026-07-29_22-09-06.png)
